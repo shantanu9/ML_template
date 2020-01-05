@@ -6,7 +6,7 @@ from sklearn import preprocessing
 
 TRAINING_DATA = os.environ.get("TRAINING_DATA")
 TEST_DATA = os.environ.get("TEST_DATA")
-FOLD = os.environ.get("FOLD")
+FOLD = int(os.environ.get("FOLD"))
 MODEL = os.environ.get("MODEL")
 
 
@@ -21,8 +21,8 @@ FOLD_MAPPING = {
 
 if __name__ == "__main__":
     df = pd.read_csv(TRAINING_DATA)
-    train_df = df[df.kfold.isin(FOLD_MAPPING.get(FOLD))].reset_index(drop=True)
-    valid_df = df[df.kfold==FOLD].reset_index(drop=True)
+    train_df = df[df.kfold.isin(FOLD_MAPPING.get(FOLD))]
+    valid_df = df[df.kfold==FOLD]
 
     ytrain = train_df.target.values
     yvalid = valid_df.target.values
