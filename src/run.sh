@@ -2,7 +2,7 @@
 
 export TRAINING_DATA=/home/shantanu/Documents/Python3/ML_template/input/train_folds.csv
 export TEST_DATA=/home/shantanu/Documents/Python3/ML_template/input/test.csv
-export FOLD = 0
+export FOLD=0
 export MODEL=$1
 
 #FOLD=0 python -m src.train

@@ -2,7 +2,9 @@ import pandas as pd
 import os
 from sklearn import ensemble
 from sklearn import preprocessing 
+from sklearn import metrics
 
+import dispatcher
 
 TRAINING_DATA = os.environ.get("TRAINING_DATA")
 TEST_DATA = os.environ.get("TEST_DATA")
@@ -34,13 +36,13 @@ if __name__ == "__main__":
 
     label_encoders = []
     for c in train_df.columns:
-        label = preprocessing.LabelEncoders()
+        label = preprocessing.LabelEncoder()
         label.fit(train_df[c].values.tolist() + valid_df[c].values.tolist())
         train_df.loc[:,c] = label.transform(train_df[c].values.tolist())
         valid_df.loc[:,c] = label.transform(valid_df[c].values.tolist())
 
 
-    clf = ensemble.RandomForestClassifier(n_jobs=-1, verbose=2)
+    clf = dispatcher.MODELS[MODEL]
     clf.fit(train_df, ytrain)
     preds = clf.predict_proba(valid_df)[:,1 ]
-    print (preds)
+    print (metrics.roc_auc_score(yvalid,preds))
