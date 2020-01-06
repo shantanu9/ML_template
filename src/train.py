@@ -4,6 +4,8 @@ from sklearn import ensemble
 from sklearn import preprocessing 
 from sklearn import metrics
 
+import joblib
+
 import dispatcher
 
 TRAINING_DATA = os.environ.get("TRAINING_DATA")
@@ -46,3 +48,12 @@ if __name__ == "__main__":
     clf.fit(train_df, ytrain)
     preds = clf.predict_proba(valid_df)[:,1 ]
     print (metrics.roc_auc_score(yvalid,preds))
+
+    # joblib.dump(label_encoders, f"models/{MODEL}_{FOLD}_label_encoder.pkl")
+    # joblib.dump(clf, f"models/{MODEL}.pkl")
+
+    # joblib.dump(label_encoders, f"models/{MODEL}_{FOLD}_label_encoder.pkl")
+    joblib.dump(label_encoders, f"/home/shantanu/Documents/Python3/ML_template/models/{MODEL}_{FOLD}_label_encoder.pkl")
+    joblib.dump(clf, f"/home/shantanu/Documents/Python3/ML_template/models/{MODEL}_{FOLD}.pkl")
+    # joblib.dump(train_df.columns, f"models/{MODEL}_{FOLD}_columns.pkl")
+    
